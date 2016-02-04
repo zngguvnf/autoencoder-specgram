@@ -46,8 +46,11 @@ input_var = T.tensor4('X')
 
 if example_is_audio:
 	# load our example audio file as a specgram
-	examplegram = util.standard_specgram((util.load_soundfile(examplewavpath, 0)))
-	print("examplegram is of shape %s" % str(np.shape(examplegram)))
+	foregroundgram = util.standard_specgram((util.load_soundfile(foregroundwavpath, 0)))
+	backgroundgram = util.standard_specgram((util.load_soundfile(backgroundwavpath, 0)))
+	print("foregroundgram is of shape %s" % str(np.shape(foregroundgram)))
+	print("backgroundgram is of shape %s" % str(np.shape(backgroundgram)))
+
 
 ###################################################################################################################
 # here we define our "semi-convolutional" autoencoder
@@ -97,7 +100,9 @@ network = lasagne.layers.NonlinearityLayer(network, nonlinearity=rectify)  # fin
 # define simple L2 loss function with a mild touch of regularisation
 prediction = lasagne.layers.get_output(network)
 loss = lasagne.objectives.squared_error(prediction, input_var)
-loss = loss.mean() + 1e-4 * lasagne.regularization.regularize_network_params(network, lasagne.regularization.l2)
+# loss = loss.mean() + 1e-4 * lasagne.regularization.regularize_network_params(network, lasagne.regularization.l2)
+lamb = 0.75
+# loss =
 
 ###################################################################################################################
 
@@ -112,7 +117,7 @@ def plot_probedata(outpostfix, plottitle=None):
 
 	if np.shape(plot_probedata_data)==():
 		if example_is_audio:
-			plot_probedata_data = np.array([[examplegram[:, examplegram_startindex:examplegram_startindex+numtimebins]]], float32)
+			plot_probedata_data = np.array([[foregroundgram[:, examplegram_startindex:examplegram_startindex+numtimebins]]], float32)
 		else:
 			plot_probedata_data = np.zeros((minibatchsize, 1, specbinnum, numtimebins), dtype=float32)
 			for _ in range(5):
@@ -194,8 +199,8 @@ if True:
 		training_data_size=100
 		for which_training_batch in range(training_data_size):
 			for which_training_datum in range(minibatchsize):
-				startindex = np.random.randint(examplegram.shape[1]-numtimebins)
-				training_data[which_training_batch, which_training_datum, :, :, :] = examplegram[:, startindex:startindex+numtimebins]
+				startindex = np.random.randint(foregroundgram.shape[1]-numtimebins)
+				training_data[which_training_batch, which_training_datum, :, :, :] = foregroundgram[:, startindex:startindex+numtimebins]
 	else:
 		# make some simple (sparse) data that we can train with
 		for which_training_batch in range(training_data_size):

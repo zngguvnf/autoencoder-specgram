@@ -8,6 +8,9 @@ examplegram_startindex = 550   # just choosing which bit to plot
 examplewavpath = "509.WAV"
 examplewavpath = "renneschiffchaff20130320bout1filt.wav"
 
+foregroundwavpath = "gj_song1.wav"
+backgroundwavpath = "gj_noise1.wav"
+
 srate = 22050.
 wavdownsample = 2  # eg 44 kHz audio, factor of 2, gets loaded as 22 kHz. for no downsampling, set this ratio to 1
 
@@ -29,6 +32,8 @@ numtimebins = 160 # 128 # 48 # NOTE that this size needs really to be compatible
 
 import os
 examplewavpath = os.path.expanduser(examplewavpath)
+foregroundwavpath = os.path.expanduser(foregroundwavpath)
+backgroundwavpath = os.path.expanduser(backgroundwavpath)
 
 
 hopsize_secs = audioframe_stride / float(srate)
