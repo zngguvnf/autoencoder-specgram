@@ -32,7 +32,7 @@ INSTALLATION
 On Ubuntu 16.04 there was some trouble while installing
 audiolab.
 Have a look at [this post](https://github.com/cournape/audiolab/issues/7#issuecomment-4166630) and
-make sure your libsndfile.so is symlinked correct before you install audiolab.
+make sure your libsndfile.so is symlinked correctly before you install audiolab.
 
 Using [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv):
 

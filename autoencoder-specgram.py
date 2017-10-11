@@ -99,7 +99,7 @@ network = lasagne.layers.NonlinearityLayer(network, nonlinearity=rectify)  # fin
 ###################################################################################################################
 # define simple L2 loss function with a mild touch of regularisation
 prediction = lasagne.layers.get_output(network)
-loss = lasagne.objectives.squared_error(prediction, input_var)
+loss = T.mean(lasagne.objectives.squared_error(prediction, input_var))
 # loss = loss.mean() + 1e-4 * lasagne.regularization.regularize_network_params(network, lasagne.regularization.l2)
 lamb = 0.75
 # loss =
