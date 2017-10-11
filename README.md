@@ -24,7 +24,25 @@ SYSTEM REQUIREMENTS
 * Matplotlib
 * scikits.audiolab
 
-Tested on Ubuntu 14.04 with Python 2.7.
+Tested on Ubuntu 16.04 with Python 2.7.
+
+
+INSTALLATION
+============
+On Ubuntu 16.04 there was some trouble while installing
+audiolab.
+Have a look at [this post](https://github.com/cournape/audiolab/issues/7#issuecomment-4166630) and
+make sure your libsndfile.so is symlinked correct before you install audiolab.
+
+Using [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv):
+
+```shell
+env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 2.7
+pyenv virtualenv 2.7 autoencoder-specgram
+pyenv activate autoencoder-specgram
+pip install -r requirements.txt
+```
+
 
 USAGE
 =====
